@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f7f9" />
+  <meta name="description" content="Find, filter, and compare shopping offers from one place. Demo or connected live shopping search." />
+  <title>Findora | Find better, buy smarter</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/mark.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" type="module" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Main navigation">
+      <a class="brand" href="/" aria-label="Findora home"><span class="brand-mark"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 7.5h18M5 14h13M5 20.5h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="22" cy="14" r="4" fill="#f6cb6c" stroke="#173d36" stroke-width="2"/></svg></span><span>findora<span class="brand-dot">.</span></span></a>
+      <div class="rail-menu">
+        <button class="rail-link active" id="nav-discover"><svg class="ico"><use href="#i-search"></use></svg><span>Discover</span></button>
+        <button class="rail-link" id="nav-saved"><svg class="ico"><use href="#i-heart"></use></svg><span>Saved items</span><span id="saved-rail-count" class="rail-count">0</span></button>
+      </div>
+      <div class="rail-bottom">
+        <div class="rail-info"><span class="live-dot"></span><span id="rail-status">Demo workspace</span></div>
+        <p>Your smarter way to shop around.</p>
+      </div>
+    </aside>
+
+    <div class="main-layout">
+      <header class="topbar">
+        <button class="mobile-brand" id="mobile-nav" aria-label="Go to discover"><span class="brand-mark small">f</span><strong>findora<span class="brand-dot">.</span></strong></button>
+        <div class="topbar-right">
+          <button class="top-link" id="about-btn"><svg class="ico"><use href="#i-info"></use></svg><span>How it works</span></button>
+          <button class="location-button" id="location-btn" aria-label="Set search location"><svg class="ico"><use href="#i-pin"></use></svg><span id="location-label">Abu Dhabi, UAE</span><svg class="ico small"><use href="#i-chevron"></use></svg></button>
+          <button id="saved-mobile" class="icon-button mobile-only" aria-label="Saved products"><svg class="ico"><use href="#i-heart"></use></svg></button>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="hero" id="hero">
+          <div class="hero-eyebrow"><span class="sparkle">✳</span> SEARCH SMARTER, SHOP BETTER</div>
+          <h1>Find what you love.<br/><span>Pay what you should.</span></h1>
+          <p class="hero-sub">One search. More stores. Better prices. Tell us what you're looking for, in your own words.</p>
+          <form class="search-composer" id="search-form">
+            <label class="sr-only" for="search-input">Describe the product you're looking for</label>
+            <textarea id="search-input" rows="2" maxlength="260" placeholder="Try ‘Samsung S26 Ultra 256GB under AED 3,500, delivered tomorrow’"></textarea>
+            <div class="composer-actions">
+              <div class="composer-hints"><span class="keyboard-tip">↵</span><span>to search</span><span class="hint-dot">·</span><span>Describe it naturally</span></div>
+              <button class="search-submit" type="submit" id="search-submit" aria-label="Search products"><span>Find products</span><svg class="ico"><use href="#i-arrow"></use></svg></button>
+            </div>
+          </form>
+          <div class="suggested"><span>Try searching</span>
+            <button class="suggestion-chip" data-query="Samsung Galaxy S26 Ultra 256GB">Galaxy S26 Ultra <svg class="ico xs"><use href="#i-arrow-up-right"></use></svg></button>
+            <button class="suggestion-chip" data-query="wireless noise cancelling headphones">Wireless headphones <svg class="ico xs"><use href="#i-arrow-up-right"></use></svg></button>
+            <button class="suggestion-chip" data-query="air fryer under AED 700">Air fryers under 700 <svg class="ico xs"><use href="#i-arrow-up-right"></use></svg></button>
+          </div>
+        </section>
+
+        <section class="results-section" id="results-section" aria-live="polite">
+          <div class="results-topline"><div><div class="section-kicker"><span class="tiny-rule"></span> YOUR SHOPPING RESULTS</div><h2 id="results-heading">Discover your next good deal</h2><p id="results-subtitle">Explore sample offers or connect live shopping search.</p></div>
+            <div class="result-actions"><button class="outline-button filter-trigger" id="mobile-filter-btn"><svg class="ico"><use href="#i-sliders"></use></svg> Filters <span class="filter-bubble" id="mobile-filter-count" hidden>0</span></button><label class="sort-control"><span>Sort by</span><select id="sort-select" aria-label="Sort results"><option value="relevance">Most relevant</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="delivery">Fastest delivery</option><option value="rating">Top rated</option><option value="discount">Biggest discount</option><option value="reviews">Most reviewed</option><option value="name-asc">Name: A to Z</option><option value="name-desc">Name: Z to A</option></select></label></div>
+          </div>
+          <div class="status-banner" id="status-banner"><svg class="ico"><use href="#i-info"></use></svg><span id="status-text">Demo data is illustrative, including prices and delivery dates. Connect a shopping API to enable live discovery.</span><button id="banner-close" aria-label="Dismiss notice"><svg class="ico small"><use href="#i-x"></use></svg></button></div>
+          <div class="active-chips" id="active-chips" aria-label="Applied search filters"></div>
+          <div class="results-body">
+            <aside class="filters" id="filters" aria-label="Product filters">
+              <div class="filter-header"><h3>Filters</h3><button class="reset-btn" id="reset-filters">Reset all</button><button class="mobile-filter-close icon-button" id="close-mobile-filter" aria-label="Close filters"><svg class="ico"><use href="#i-x"></use></svg></button></div>
+              <div class="filter-block"><label class="filter-heading" for="price-min">Price range <span>AED</span></label><div class="price-inputs"><input id="price-min" type="number" min="0" step="1" placeholder="Min" aria-label="Minimum price"/><span>–</span><input id="price-max" type="number" min="0" step="1" placeholder="Max" aria-label="Maximum price"/></div></div>
+              <div class="filter-block"><div class="filter-heading">Category</div><div id="category-filters" class="check-list"></div></div>
+              <div class="filter-block"><div class="filter-heading">Store</div><div id="store-filters" class="check-list"></div></div>
+              <div class="filter-block"><label class="filter-heading" for="delivery-filter">Delivery timeframe</label><select id="delivery-filter" class="filter-select"><option value="all">Any delivery time</option><option value="0">Today</option><option value="1">By tomorrow</option><option value="2">Within 2 days</option><option value="3">Within 3 days</option><option value="7">Within 7 days</option></select><p class="filter-note">Timings depend on available source information.</p></div>
+              <div class="filter-block"><label class="filter-heading" for="rating-filter">Customer rating</label><select id="rating-filter" class="filter-select"><option value="all">All ratings</option><option value="4.5">4.5 stars & up</option><option value="4">4 stars & up</option><option value="3">3 stars & up</option></select></div>
+              <div class="filter-block last"><div class="toggle-row"><div><strong>Free delivery</strong><span>When available</span></div><label class="toggle"><input id="free-shipping" type="checkbox"/><span class="toggle-track"></span></label></div><div class="toggle-row"><div><strong>Deals only</strong><span>Offers with a listed discount</span></div><label class="toggle"><input id="deals-only" type="checkbox"/><span class="toggle-track"></span></label></div></div>
+              <button class="apply-filter-mobile" id="apply-mobile-filter">Show results</button>
+            </aside>
+            <div class="list-panel"><div class="list-meta"><span id="product-count">Loading products…</span><div class="view-controls"><span class="result-mode" id="mode-label">● Demo results</span></div></div><div id="product-grid" class="product-grid" aria-label="Product results"></div><div id="empty-results" class="empty-results" hidden></div><div id="load-more-wrap" class="load-more-wrap" hidden><button class="outline-button load-more" id="load-more">Show more products <svg class="ico"><use href="#i-arrow-down"></use></svg></button></div></div>
+          </div>
+        </section>
+        <footer class="page-footer"><span>© 2026 Findora, prototype.</span><span>Compare thoughtfully. Confirm final details with the seller.</span></footer>
+      </main>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay" hidden></div>
+  <div id="location-modal" class="dialog" role="dialog" aria-modal="true" aria-labelledby="loc-title" hidden><div class="dialog-head"><div><h2 id="loc-title">Where are you shopping?</h2><p>We use your city to tailor shopping discovery.</p></div><button class="icon-button close-dialog" aria-label="Close location dialog"><svg class="ico"><use href="#i-x"></use></svg></button></div><label class="dialog-label" for="city-select">Delivery city</label><select id="city-select" class="dialog-input"></select><button class="location-detect" id="detect-location"><svg class="ico"><use href="#i-crosshair"></use></svg><span>Use my current location</span></button><p class="dialog-note">Location permission is optional. We use it only to select an approximate city. Actual shipping eligibility depends on your delivery address and the seller.</p><button class="primary-wide" id="save-location">Use this city <svg class="ico"><use href="#i-arrow"></use></svg></button></div>
+  <div id="info-modal" class="dialog" role="dialog" aria-modal="true" aria-labelledby="info-title" hidden><div class="dialog-head"><div><h2 id="info-title">How Findora works</h2><p>Transparency about what you're seeing.</p></div><button class="icon-button close-dialog" aria-label="Close information dialog"><svg class="ico"><use href="#i-x"></use></svg></button></div><div class="how-steps"><div><span>01</span><strong>Describe your product</strong><p>Enter an exact model or a natural-language request.</p></div><div><span>02</span><strong>Explore the matches</strong><p>Filter by price, seller, rating and available delivery details.</p></div><div><span>03</span><strong>Check with the seller</strong><p>Live discovery does not guarantee local stock, shipping, or checkout price. Verify directly before purchasing.</p></div></div><div class="info-foot">Without an API key, all prices and offers are sample data. To enable live discovery, follow the README setup.</div></div>
+  <div id="product-modal" class="dialog product-dialog" role="dialog" aria-modal="true" aria-labelledby="product-title" hidden><div class="dialog-head"><div><span class="dialog-eyebrow">OFFER DETAILS</span><h2 id="product-title">Product details</h2></div><button class="icon-button close-dialog" aria-label="Close offer dialog"><svg class="ico"><use href="#i-x"></use></svg></button></div><div id="product-dialog-body"></div></div>
+  <div id="compare-dock" class="compare-dock" hidden><div><strong id="compare-count">0 products selected</strong><span>Compare up to 3 products</span></div><div class="compare-actions"><button id="compare-clear">Clear</button><button id="compare-open">Compare now <svg class="ico"><use href="#i-arrow"></use></svg></button></div></div>
+  <div id="compare-modal" class="dialog compare-dialog" role="dialog" aria-modal="true" aria-labelledby="compare-title" hidden><div class="dialog-head"><div><h2 id="compare-title">Compare products</h2><p>Side-by-side offer details</p></div><button class="icon-button close-dialog" aria-label="Close comparison dialog"><svg class="ico"><use href="#i-x"></use></svg></button></div><div id="compare-body" class="compare-scroll"></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6c-2-2-5.1-2-7.1 0L12 6.3l-1.7-1.7c-2-2-5.1-2-7.1 0a5 5 0 0 0 0 7.1l8.1 8.1a1 1 0 0 0 1.4 0l8.1-8.1a5 5 0 0 0 0-7.1Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.1"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="var(--bg-main)"/><circle cx="16" cy="17" r="3" fill="var(--bg-main)"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="i-crosshair" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h12v11H2zM14 10h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.4 7.1 1-5.1 5 .9 7-6-3.3-6.1 3.3 1.2-7-5.2-5 7.1-1z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 4h7v7M20 4l-9 9"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M4 9h16l-1 12H5L4 9ZM9 9V6a3 3 0 1 1 6 0v3"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 9a7 7 0 0 1 12-2l2 5M4 12l2 5a7 7 0 0 0 12-2"/></symbol>
+  </svg>
+</body>
+</html>
